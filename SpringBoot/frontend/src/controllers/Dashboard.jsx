@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getAllReadings } from '../services/apiService';
+import { getAllReadings, downloadYieldReport } from '../services/apiService.jsx';
 
 function Dashboard() {
     const [readings, setReadings] = useState([]);
@@ -28,6 +28,27 @@ function Dashboard() {
             });
     };
 
+    const handleDownloadReport = () => {
+        downloadYieldReport()
+            .then(response => {
+                // Create a temporary URL for the blob data
+                const url = window.URL.createObjectURL(new Blob([response.data]));
+                
+                // Create a temporary link element
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', 'yield_report.pdf'); // Set the file name
+                
+                // Append, click, and remove the link
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            })
+            .catch(error => {
+                console.error("Error downloading report:", error);
+            });
+    };
+
     if (error) {
         return <div style={{ color: 'red', padding: '20px' }}>{error}</div>;
     }
@@ -35,6 +56,10 @@ function Dashboard() {
     return (
         <div style={{ padding: '20px' }}>
             <h1>Smart Agriculture Dashboard</h1>
+
+            <button onClick={handleDownloadReport} style={{ marginBottom: '20px' }}>
+                Download PDF Report
+            </button>
             
             <table border="1" cellPadding="10" cellSpacing="0" style={{ width: '80%', margin: 'auto' }}>
                 <thead>

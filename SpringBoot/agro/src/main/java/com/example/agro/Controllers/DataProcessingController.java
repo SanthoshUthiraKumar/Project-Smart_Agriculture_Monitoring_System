@@ -4,6 +4,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import com.example.agro.DTOs.SimulatorRequestDTO;
 import com.example.agro.Models.SensorReading;
@@ -27,6 +32,9 @@ public class DataProcessingController {
 
     @Autowired
     private SensorReadingRepository repository;
+
+    @Autowired // Autowire the RestTemplate you defined in AppConfig
+    private RestTemplate restTemplate;
 
     /**
      * This endpoint receives data from your Python simulator,
@@ -67,5 +75,38 @@ public class DataProcessingController {
     public ResponseEntity<List<SensorReading>> getAllReadings() {
         List<SensorReading> readings = repository.findAll();
         return ResponseEntity.ok(readings);
+    }
+
+    @GetMapping("/yield-report")
+    public ResponseEntity<Resource> getYieldReport() {
+        // The URL of your .NET service (running on port 7000)
+        String dotnetReportUrl = "http://localhost:7000/api/report/yield-report";
+
+        try {
+            // 1. Call the .NET API. We expect a raw byte array (the PDF)
+            byte[] pdfBytes = restTemplate.getForObject(dotnetReportUrl, byte[].class);
+
+            if (pdfBytes == null) {
+                return ResponseEntity.status(500).body(null); // Handle error
+            }
+
+            // 2. Create a Spring Resource from the byte array
+            ByteArrayResource resource = new ByteArrayResource(pdfBytes);
+
+            // 3. Set HTTP headers to tell the browser it's a file download
+            HttpHeaders headers = new HttpHeaders();
+            headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=yield_report.pdf");
+            headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_PDF_VALUE);
+
+            // 4. Return the file
+            return ResponseEntity.ok()
+                    .headers(headers)
+                    .contentLength(pdfBytes.length)
+                    .body(resource);
+
+        } catch (Exception e) {
+            System.err.println("Error calling .NET report service: " + e.getMessage());
+            return ResponseEntity.status(500).body(null);
+        }
     }
 }

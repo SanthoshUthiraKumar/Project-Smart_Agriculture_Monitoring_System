@@ -1,4 +1,4 @@
-using DotNetReportService.Services; // Import our PDF service
+using dotnet_service.Services; // Import our PDF service
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 // This tells .NET to use the Controller-based system
 builder.Services.AddControllers();
 
-// This registers your PdfService so it can be injected
+// This registers your PdfService so it can be "injected"
 // into the ReportController
 builder.Services.AddScoped<PdfService>();
 
@@ -25,7 +25,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection(); // We can comment this out for simple http local testing
+app.UseAuthorization();
 
 // This tells .NET to find and use your Controllers
 app.MapControllers();

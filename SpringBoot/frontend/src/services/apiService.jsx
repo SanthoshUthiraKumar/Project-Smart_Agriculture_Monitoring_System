@@ -9,3 +9,9 @@ const API_URL = 'http://localhost:8080/api/data';
 export const getAllReadings = () => {
     return axios.get(`${API_URL}/all`);
 };
+
+export const downloadYieldReport = () => {
+    return axios.get(`${API_URL}/yield-report`, {
+        responseType: 'blob', // This is crucial for file downloads
+    });
+};
