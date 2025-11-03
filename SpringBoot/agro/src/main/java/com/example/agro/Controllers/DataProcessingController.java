@@ -43,27 +43,30 @@ public class DataProcessingController {
     @PostMapping("/submit")
     public ResponseEntity<SensorReading> processAndSaveData(@RequestBody SimulatorRequestDTO request) {
         
-        // 1. Call our service to get a prediction from the Flask API
+        // 1. Call the Flask ML Service
+        // We only send the first two iotFeatures to the ML model
+        List<Double> iotForML = request.getIotFeatures().subList(0, 2); // [soil_moisture, temperature]
+        
         double yieldPrediction = predictionService.getPrediction(
             request.getSpectralFeatures(), 
-            request.getIotFeatures()
+            iotForML 
         );
 
-        // 2. Create the final SensorReading object to save
+        // 2. Create the entity to save
         SensorReading reading = new SensorReading();
         reading.setUniqueDataId(request.getUniqueId());
         
-        // iotFeatures list is [soil_moisture, temperature]
+        // iotFeatures list is [soil_moisture, temperature, lat, long]
         reading.setSoilMoisture(request.getIotFeatures().get(0));
         reading.setTemperature(request.getIotFeatures().get(1));
+        reading.setLat(request.getIotFeatures().get(2)); // <-- ADD THIS
+        reading.setLongitude(request.getIotFeatures().get(3)); // <-- ADD THIS
         
         reading.setPredictedYield(yieldPrediction);
         reading.setTimestamp(LocalDateTime.now());
 
-        // 3. Save the final result to our H2 database
+        // 3. Save to database
         SensorReading savedReading = repository.save(reading);
-
-        // 4. Return the saved object as confirmation
         return ResponseEntity.ok(savedReading);
     }
 

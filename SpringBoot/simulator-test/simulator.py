@@ -22,23 +22,23 @@ except FileNotFoundError:
 
 # Identify the columns
 spectral_columns = [col for col in df.columns if 'X' in col]
-iot_columns = ['soil_moisture', 'temperature']
+# ADD lat and long to the iot_columns list
+iot_columns = ['soil_moisture', 'temperature', 'lat', 'long'] 
 id_column = 'UniqueID'
 
 def send_data():
     # Select a random row from the dataset
     random_row = df.sample(n=1)
     
-    # Extract the data
     spectral_data = random_row[spectral_columns].iloc[0].tolist()
-    iot_data = random_row[iot_columns].iloc[0].tolist()
-    unique_id = str(random_row[id_column].iloc[0]) # Get the UniqueID
+    # iot_data will now be a list of 4 items
+    iot_data = random_row[iot_columns].iloc[0].tolist() 
+    unique_id = str(random_row[id_column].iloc[0]) 
 
-    # Construct the JSON payload to match the Java DTO
     data = {
         "uniqueId": unique_id,
         "spectralFeatures": spectral_data,
-        "iotFeatures": iot_data
+        "iotFeatures": iot_data # Send all 4 items
     }
 
     try:

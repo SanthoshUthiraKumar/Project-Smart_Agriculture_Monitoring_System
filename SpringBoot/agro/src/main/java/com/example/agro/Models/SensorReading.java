@@ -21,4 +21,7 @@ public class SensorReading {
     private double temperature;
     private double predictedYield; // The result from our Flask API
     private LocalDateTime timestamp;
+
+    private double lat;
+    private double longitude;
 }
