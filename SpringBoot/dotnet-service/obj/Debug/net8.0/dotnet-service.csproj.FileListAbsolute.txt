@@ -1,3 +1,11 @@
+C:\Users\SEC\OneDrive\Desktop\Project\Final Year Project\Smart_Agriculture_Monitoring_System\SpringBoot\dotnet-service\obj\Debug\net8.0\dotnet-service.csproj.AssemblyReference.cache
+C:\Users\SEC\OneDrive\Desktop\Project\Final Year Project\Smart_Agriculture_Monitoring_System\SpringBoot\dotnet-service\obj\Debug\net8.0\dotnet-service.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\SEC\OneDrive\Desktop\Project\Final Year Project\Smart_Agriculture_Monitoring_System\SpringBoot\dotnet-service\obj\Debug\net8.0\dotnet-service.AssemblyInfoInputs.cache
+C:\Users\SEC\OneDrive\Desktop\Project\Final Year Project\Smart_Agriculture_Monitoring_System\SpringBoot\dotnet-service\obj\Debug\net8.0\dotnet-service.AssemblyInfo.cs
+C:\Users\SEC\OneDrive\Desktop\Project\Final Year Project\Smart_Agriculture_Monitoring_System\SpringBoot\dotnet-service\obj\Debug\net8.0\dotnet-service.csproj.CoreCompileInputs.cache
+C:\Users\SEC\OneDrive\Desktop\Project\Final Year Project\Smart_Agriculture_Monitoring_System\SpringBoot\dotnet-service\obj\Debug\net8.0\dotnet-service.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\SEC\OneDrive\Desktop\Project\Final Year Project\Smart_Agriculture_Monitoring_System\SpringBoot\dotnet-service\obj\Debug\net8.0\dotnet-service.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\SEC\OneDrive\Desktop\Project\Final Year Project\Smart_Agriculture_Monitoring_System\SpringBoot\dotnet-service\obj\Debug\net8.0\dotnet-service.sourcelink.json
 C:\Users\SEC\OneDrive\Desktop\Project\Final Year Project\Smart_Agriculture_Monitoring_System\SpringBoot\dotnet-service\bin\Debug\net8.0\appsettings.Development.json
 C:\Users\SEC\OneDrive\Desktop\Project\Final Year Project\Smart_Agriculture_Monitoring_System\SpringBoot\dotnet-service\bin\Debug\net8.0\appsettings.json
 C:\Users\SEC\OneDrive\Desktop\Project\Final Year Project\Smart_Agriculture_Monitoring_System\SpringBoot\dotnet-service\bin\Debug\net8.0\LatoFont\Lato-Black.ttf
@@ -52,14 +60,6 @@ C:\Users\SEC\OneDrive\Desktop\Project\Final Year Project\Smart_Agriculture_Monit
 C:\Users\SEC\OneDrive\Desktop\Project\Final Year Project\Smart_Agriculture_Monitoring_System\SpringBoot\dotnet-service\bin\Debug\net8.0\runtimes\win-x86\native\libwinpthread-1.dll
 C:\Users\SEC\OneDrive\Desktop\Project\Final Year Project\Smart_Agriculture_Monitoring_System\SpringBoot\dotnet-service\bin\Debug\net8.0\runtimes\win-x86\native\qpdf.dll
 C:\Users\SEC\OneDrive\Desktop\Project\Final Year Project\Smart_Agriculture_Monitoring_System\SpringBoot\dotnet-service\bin\Debug\net8.0\runtimes\win-x86\native\zlib1.dll
-C:\Users\SEC\OneDrive\Desktop\Project\Final Year Project\Smart_Agriculture_Monitoring_System\SpringBoot\dotnet-service\obj\Debug\net8.0\dotnet-service.csproj.AssemblyReference.cache
-C:\Users\SEC\OneDrive\Desktop\Project\Final Year Project\Smart_Agriculture_Monitoring_System\SpringBoot\dotnet-service\obj\Debug\net8.0\dotnet-service.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\SEC\OneDrive\Desktop\Project\Final Year Project\Smart_Agriculture_Monitoring_System\SpringBoot\dotnet-service\obj\Debug\net8.0\dotnet-service.AssemblyInfoInputs.cache
-C:\Users\SEC\OneDrive\Desktop\Project\Final Year Project\Smart_Agriculture_Monitoring_System\SpringBoot\dotnet-service\obj\Debug\net8.0\dotnet-service.AssemblyInfo.cs
-C:\Users\SEC\OneDrive\Desktop\Project\Final Year Project\Smart_Agriculture_Monitoring_System\SpringBoot\dotnet-service\obj\Debug\net8.0\dotnet-service.csproj.CoreCompileInputs.cache
-C:\Users\SEC\OneDrive\Desktop\Project\Final Year Project\Smart_Agriculture_Monitoring_System\SpringBoot\dotnet-service\obj\Debug\net8.0\dotnet-service.MvcApplicationPartsAssemblyInfo.cs
-C:\Users\SEC\OneDrive\Desktop\Project\Final Year Project\Smart_Agriculture_Monitoring_System\SpringBoot\dotnet-service\obj\Debug\net8.0\dotnet-service.MvcApplicationPartsAssemblyInfo.cache
-C:\Users\SEC\OneDrive\Desktop\Project\Final Year Project\Smart_Agriculture_Monitoring_System\SpringBoot\dotnet-service\obj\Debug\net8.0\dotnet-service.sourcelink.json
 C:\Users\SEC\OneDrive\Desktop\Project\Final Year Project\Smart_Agriculture_Monitoring_System\SpringBoot\dotnet-service\obj\Debug\net8.0\staticwebassets.build.json
 C:\Users\SEC\OneDrive\Desktop\Project\Final Year Project\Smart_Agriculture_Monitoring_System\SpringBoot\dotnet-service\obj\Debug\net8.0\staticwebassets.development.json
 C:\Users\SEC\OneDrive\Desktop\Project\Final Year Project\Smart_Agriculture_Monitoring_System\SpringBoot\dotnet-service\obj\Debug\net8.0\staticwebassets\msbuild.dotnet-service.Microsoft.AspNetCore.StaticWebAssets.props

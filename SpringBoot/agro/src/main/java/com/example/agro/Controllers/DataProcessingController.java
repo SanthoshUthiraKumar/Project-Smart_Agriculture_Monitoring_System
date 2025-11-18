@@ -9,7 +9,6 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,13 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import com.example.agro.DTOs.SimulatorRequestDTO;
+import com.example.agro.DTOs.YieldReportDTO;
 import com.example.agro.Models.SensorReading;
 import com.example.agro.Repository.SensorReadingRepository;
 import com.example.agro.Services.PredictionService;
 
 @RestController
 @RequestMapping("/api/data")
-@CrossOrigin(origins = "http://localhost:5173")
 public class DataProcessingController {
 
     @Autowired
@@ -88,15 +87,28 @@ public class DataProcessingController {
             // 1. Fetch all data from *this* service's database
             List<SensorReading> allReadings = repository.findAll();
 
+            List<YieldReportDTO> dtoList = allReadings.stream().map(r -> {
+            YieldReportDTO dto = new YieldReportDTO();
+                dto.setId(r.getId());
+                dto.setUniqueDataId(r.getUniqueDataId());
+                dto.setPredictedYield(r.getPredictedYield());
+                dto.setSoilMoisture(r.getSoilMoisture());
+                dto.setTemperature(r.getTemperature());
+                dto.setTimestamp(r.getTimestamp().toString());  // <-- STRING FIX
+                dto.setLat(r.getLat());
+                dto.setLongitude(r.getLongitude());
+                return dto;
+            }).toList();
+
             // 2. Call the .NET API using POST, sending our data as the body
             byte[] pdfBytes = restTemplate.postForObject(
                 dotnetReportUrl, 
-                allReadings, // <-- Send our data list
+                dtoList, // <-- Send our data list
                 byte[].class
             );
 
             if (pdfBytes == null) {
-                return ResponseEntity.status(500).body(null);
+                return ResponseEntity.status(500).body(new ByteArrayResource(new byte[0]));
             }
 
             // 3. Create a Spring Resource from the byte array

@@ -1,10 +1,13 @@
+using System;
 using System.Text.Json.Serialization;
 
-// Your namespace might be 'dotnet_service.Models'
-namespace dotnet_service.Models 
+namespace dotnet_service.Models
 {
     public class YieldReportData
     {
+        [JsonPropertyName("id")]
+        public long Id { get; set; }
+
         [JsonPropertyName("uniqueDataId")]
         public string? UniqueDataId { get; set; }
 
@@ -16,9 +19,10 @@ namespace dotnet_service.Models
 
         [JsonPropertyName("temperature")]
         public double Temperature { get; set; }
-        
+
         [JsonPropertyName("timestamp")]
-        public DateTime Timestamp { get; set; }
+        public string? Timestamp { get; set; }
+
 
         [JsonPropertyName("lat")]
         public double Lat { get; set; }
