@@ -3,7 +3,10 @@ import pickle
 import tensorflow as tf
 from flask import Flask, request, jsonify
 from sklearn.preprocessing import StandardScaler
+from PIL import Image
+import io
 import os
+import random
 
 # Initialize the Flask application
 app = Flask(__name__)
@@ -93,4 +96,96 @@ def predict():
 # --- 6. Run the API Server ---
 if __name__ == '__main__':
     # Run the Flask app on port 5000, accessible from any IP
+    app.run(debug=True, host='0.0.0.0', port=5000)
+    
+@app.route('/predict-disease', methods=['POST'])
+def predict_disease():
+    if 'image' not in request.files:
+        return jsonify({'error': 'No image uploaded'}), 400
+    
+    file = request.files['image']
+    
+    try:
+        # 1. Read the image
+        img = Image.open(file.stream)
+        img = img.resize((224, 224)) # Standard size for CNNs
+        
+        # 2. Preprocess (Convert to array)
+        img_array = np.array(img) / 255.0
+        img_array = np.expand_dims(img_array, axis=0)
+
+        # 3. Make Prediction
+        # If you have a real model: 
+        # preds = disease_model.predict(img_array)
+        # class_id = np.argmax(preds[0])
+        
+        # --- SIMULATED LOGIC (For demonstration) ---
+        # We will simulate a detection based on random chance or filename
+        # In a real project, you MUST replace this with model.predict()
+        import random
+        diseases = ['Healthy', 'Early Blight', 'Late Blight', 'Leaf Curl']
+        prediction = random.choice(diseases)
+        confidence = round(random.uniform(85.0, 99.9), 2)
+        # -------------------------------------------
+
+        return jsonify({
+            'disease': prediction,
+            'confidence': f"{confidence}%",
+            'advice': get_advice(prediction)
+        })
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+def get_advice(disease):
+    advice_dict = {
+        'Healthy': 'Crop is in good condition. Continue monitoring.',
+        'Early Blight': 'Apply copper-based fungicides. Improve air circulation.',
+        'Late Blight': 'Remove infected leaves immediately. Avoid overhead irrigation.',
+        'Leaf Curl': 'Control whitefly population. Use resistant crop varieties.'
+    }
+    return advice_dict.get(disease, 'Consult an expert.')
+
+@app.route('/predict-disease', methods=['POST'])
+def predict_disease():
+    if 'image' not in request.files:
+        return jsonify({'error': 'No image uploaded'}), 400
+    
+    file = request.files['image']
+    
+    try:
+        # 1. Read and Resize Image
+        img = Image.open(file.stream)
+        img = img.resize((224, 224)) 
+        
+        # 2. In a real scenario, you would preprocess and pass to a CNN model:
+        # img_array = np.array(img) / 255.0
+        # preds = disease_model.predict(np.expand_dims(img_array, axis=0))
+        
+        # --- SIMULATED LOGIC (Placeholder until you train a disease model) ---
+        diseases = ['Healthy', 'Early Blight', 'Late Blight', 'Leaf Curl', 'Bacterial Spot']
+        prediction = random.choice(diseases)
+        confidence = round(random.uniform(85.0, 99.0), 2)
+        
+        return jsonify({
+            'disease': prediction,
+            'confidence': f"{confidence}%",
+            'advice': get_advice(prediction)
+        })
+
+    except Exception as e:
+        print(f"Error processing image: {e}")
+        return jsonify({'error': str(e)}), 500
+
+def get_advice(disease):
+    advice_dict = {
+        'Healthy': 'Plant is healthy. Maintain current care.',
+        'Early Blight': 'Use copper-based fungicides and improve air circulation.',
+        'Late Blight': 'Remove infected leaves immediately. Avoid overhead watering.',
+        'Leaf Curl': 'Control pests (whiteflies/thrips). Use resistant varieties.',
+        'Bacterial Spot': 'Avoid wet foliage. Apply copper sprays.'
+    }
+    return advice_dict.get(disease, 'Consult an expert.')
+
+if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)

@@ -2,6 +2,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.2.0
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dotnet-recommendation", "dotnet-recommendation\dotnet-recommendation.csproj", "{6BBBE850-DBC3-D1FB-D4B9-793912530747}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dotnet-service", "dotnet-service\dotnet-service.csproj", "{035980E7-3E40-B54B-398A-F757064066A1}"
 EndProject
 Global
@@ -10,6 +12,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6BBBE850-DBC3-D1FB-D4B9-793912530747}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BBBE850-DBC3-D1FB-D4B9-793912530747}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BBBE850-DBC3-D1FB-D4B9-793912530747}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BBBE850-DBC3-D1FB-D4B9-793912530747}.Release|Any CPU.Build.0 = Release|Any CPU
 		{035980E7-3E40-B54B-398A-F757064066A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{035980E7-3E40-B54B-398A-F757064066A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{035980E7-3E40-B54B-398A-F757064066A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -19,6 +25,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {CF04CA1D-F34D-4BA8-948C-47ADB6255E45}
+		SolutionGuid = {AF202DFA-5FEB-4B39-98C1-704750E2FB64}
 	EndGlobalSection
 EndGlobal

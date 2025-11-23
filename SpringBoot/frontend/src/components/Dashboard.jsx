@@ -3,6 +3,8 @@ import { getAllReadings, downloadYieldReport } from '../services/apiService.jsx'
 import GaugeChart from './GaugeChart.jsx';
 import { MapContainer, TileLayer } from 'react-leaflet';
 import { HeatmapLayer } from 'react-leaflet-heatmap-layer-v3';
+import RecommendationForm from './RecommendationForm.jsx';
+import DiseaseUpload from './DiseaseUpload.jsx';
 
 // --- Threshold for irrigation alert ---
 const SOIL_MOISTURE_THRESHOLD = 30;
@@ -136,6 +138,16 @@ function Dashboard() {
           unit="°C"
           max={50}
         />
+      </div>
+
+      {/* --- RECOMMENDATION FORM --- */}
+      <div style={{ margin: '40px 0' }}>
+        <RecommendationForm />
+      </div>
+
+      {/* --- DISEASE UPLOAD --- */}
+      <div style={{ margin: '40px 0' }}>
+        <DiseaseUpload />
       </div>
 
       {/* --- PDF REPORT DOWNLOAD --- */}

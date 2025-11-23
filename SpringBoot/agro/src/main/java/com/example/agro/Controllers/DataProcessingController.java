@@ -118,6 +118,7 @@ public class DataProcessingController {
             HttpHeaders headers = new HttpHeaders();
             headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=dynamic_yield_report.pdf");
             headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_PDF_VALUE);
+            
 
             // 5. Return the file
             return ResponseEntity.ok()
