@@ -1,0 +1,6 @@
+@advisory_service_HostAddress = http://localhost:5162
+
+GET {{advisory_service_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

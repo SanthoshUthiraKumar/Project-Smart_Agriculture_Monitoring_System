@@ -2,28 +2,46 @@ package com.example.agro.controllers;
 
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.agro.dto.FieldAnalyticsResponse;
 import com.example.agro.services.FieldAnalyticsService;
 
 @RestController
 @RequestMapping("/api/v1/analytics")
 public class FieldAnalyticsController {
 
-    private final FieldAnalyticsService analyticsService;
+    @Autowired
+    private FieldAnalyticsService fieldAnalyticsService;
 
-    public FieldAnalyticsController(FieldAnalyticsService analyticsService) {
-        this.analyticsService = analyticsService;
+    @GetMapping("/start")
+    public ResponseEntity<?> startSimulation() {
+        String res = fieldAnalyticsService.startSimulation();
+        return ResponseEntity.ok(Map.of("status", res));
     }
 
-    @PostMapping("/field")
-    public ResponseEntity<FieldAnalyticsResponse> analyzeField(@RequestBody Map<String, Object> payload) {
-        FieldAnalyticsResponse resp = analyticsService.analyzeField(payload);
-        return ResponseEntity.ok(resp);
+    @GetMapping("/fields")
+    public ResponseEntity<?> getFields() {
+        var fields = fieldAnalyticsService.getFields();
+        // include dataset local path for reference (your system will convert path -> url)
+        return ResponseEntity.ok(Map.of(
+                "status", "ok",
+                "dataset_url", "/mnt/data/enhanced_agri_dataset.csv",
+                "fields", fields
+        ));
     }
+
+    @PostMapping("/adjust")
+    public ResponseEntity<?> adjustField(@RequestBody Map<String, Object> body) {
+        Integer fieldId = (Integer) body.get("fieldId");
+        if (fieldId == null) return ResponseEntity.badRequest().body(Map.of("status","error","message","fieldId required"));
+        var res = fieldAnalyticsService.adjustField(fieldId);
+        return ResponseEntity.ok(res);
+    }
+
 }

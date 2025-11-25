@@ -1,16 +1,10 @@
 package com.example.agro.dto;
 
-import lombok.Data;
+import java.util.List;
+import java.util.Map;
 
-@Data
 public class FieldAnalyticsResponse {
-    private YieldResponse yield;
-    private CropRecommendationResponse cropRecommendation;
-    private DiseaseResponse disease;
-    private RecommendationResultDto nutrientRecommendation;
-    private AdvisoryResultDto advisory;
-    private double overall_risk;
-    private double health_score;
-    private String recommended_action;
-    private String dataset_url_used;
+    public String status;
+    public String dataset_url;
+    public List<Map<String, Object>> fields; // each field is a map (field-level JSON from Python)
 }

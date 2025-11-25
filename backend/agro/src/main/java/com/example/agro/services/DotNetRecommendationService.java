@@ -1,24 +1,37 @@
 package com.example.agro.services;
 
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Value;
+import com.example.agro.dto.CropRecommendationRequest;
+import com.example.agro.dto.CropRecommendationResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
+
+import java.util.Map;
 
 @Service
 public class DotNetRecommendationService {
-    private final RestTemplate restTemplate;
-    private final String recommendationBaseUrl;
 
-    public DotNetRecommendationService(RestTemplate restTemplate,
-                                       @Value("${services.dotnet-recommendation.base-url}") String recommendationBaseUrl) {
-        this.restTemplate = restTemplate;
-        this.recommendationBaseUrl = recommendationBaseUrl;
-    }
+    @Autowired
+    private WebClient dotnetWebClient;
 
-    public Map<String, Object> getRecommendations(Map<String, Object> payload) {
-        String url = recommendationBaseUrl + "/api/recommend";
-        return restTemplate.postForObject(url, payload, Map.class);
+    public CropRecommendationResponse recommendCrop(CropRecommendationRequest req) {
+        try {
+            Map resp = dotnetWebClient.post()
+                    .uri("/recommend/crop")
+                    .bodyValue(req)
+                    .retrieve()
+                    .bodyToMono(Map.class)
+                    .block();
+
+            CropRecommendationResponse out = new CropRecommendationResponse();
+            out.status = (String) resp.getOrDefault("status", "ok");
+            out.recommendations = (java.util.List<Map<String, Object>>) resp.getOrDefault("recommendations", java.util.List.of());
+            return out;
+        } catch (Exception e) {
+            CropRecommendationResponse out = new CropRecommendationResponse();
+            out.status = "error";
+            out.recommendations = java.util.List.of();
+            return out;
+        }
     }
 }
