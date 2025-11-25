@@ -6,3 +6,15 @@
 .analytics-section {
   margin-top: 2rem;
 }
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 3fr 1fr; /* Map takes 3 parts, Alerts take 1 part */
+  gap: 24px;
+}
+.full-width {
+  grid-column: 1 / -1; /* Span full width */
+}
+.main-map-card {
+  min-height: 500px;
+}
