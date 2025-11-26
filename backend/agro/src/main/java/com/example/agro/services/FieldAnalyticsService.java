@@ -13,6 +13,9 @@ public class FieldAnalyticsService {
     @Autowired
     private WebClient pythonWebClient;
 
+    @Autowired
+    private AlertService alertService;
+
     public String startSimulation() {
         try {
             String res = pythonWebClient.get()
@@ -59,4 +62,11 @@ public class FieldAnalyticsService {
             return Map.of("status", "error", "message", e.getMessage());
         }
     }
+
+    public void applyFix(int fieldId) {
+        adjustField(fieldId);
+        alertService.clearAlertsForField(fieldId); // backend clears once
+    }
+
+
 }

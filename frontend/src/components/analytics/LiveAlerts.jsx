@@ -4,13 +4,12 @@ import { adjustField, clearAlerts } from "../../api/analyticsAPI";
 
 export default function LiveAlerts({ fieldId }) {
   const { alertsMap, clearFieldAlertsLocal } = useAlerts();
-  const fieldAlerts = alertsMap[fieldId] ? Object.entries(alertsMap[fieldId]) : [];
+  const fieldAlerts = alertsMap[String(fieldId)] ? Object.entries(alertsMap[String(fieldId)]) : [];
 
   const handleFix = async () => {
     try {
-      await adjustField(fieldId); // java aggregator triggers python adjust
-      // clear on success (server also broadcasts clear; do local clear to be instant)
-      await clearAlerts(fieldId);  // ensures server clears and broadcasts
+      await adjustField(fieldId);
+      await clearAlerts(fieldId);
       clearFieldAlertsLocal(fieldId);
     } catch (err) {
       console.error("fix failed", err);
@@ -26,7 +25,6 @@ export default function LiveAlerts({ fieldId }) {
           <strong>{type}</strong>: {data.message}
         </div>
       ))}
-
       <button className="btn-fix" onClick={handleFix} style={{ marginTop: "10px" }}>
         Apply Fix
       </button>

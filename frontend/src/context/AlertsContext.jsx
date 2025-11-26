@@ -4,7 +4,7 @@ import { ALERTS_SSE_URL } from "../api/analyticsAPI";
 const AlertsContext = createContext();
 
 export function AlertsProvider({ children }) {
-  const [alertsMap, setAlertsMap] = useState({}); // fieldId -> { type -> {message,level,timestamp} }
+  const [alertsMap, setAlertsMap] = useState({}); // fieldId (string) -> { type -> {message,level,timestamp} }
 
   useEffect(() => {
     let es;
@@ -19,10 +19,14 @@ export function AlertsProvider({ children }) {
       };
 
       es.addEventListener("initial", (e) => {
-        // server will send initial snapshot as JSON
         try {
-          const data = JSON.parse(e.data);
-          setAlertsMap(data || {});
+          const data = JSON.parse(e.data || "{}");
+          // normalize keys to strings
+          const normalized = {};
+          Object.keys(data || {}).forEach(k => {
+            normalized[String(k)] = data[k];
+          });
+          setAlertsMap(normalized);
         } catch (err) {
           console.warn("invalid initial snapshot", err);
         }
@@ -31,22 +35,19 @@ export function AlertsProvider({ children }) {
       es.addEventListener("alert", (e) => {
         try {
           const payload = JSON.parse(e.data);
-
-          // If it's a clear action published by server: {fieldId, action:"cleared"}
           if (payload && payload.action === "cleared") {
             setAlertsMap(prev => {
               const copy = { ...prev };
-              delete copy[payload.fieldId];
+              delete copy[String(payload.fieldId)];
               return copy;
             });
             return;
           }
 
-          // if payload is an AlertDto (fieldId, type, level, message, timestamp)
           if (payload && payload.fieldId && payload.type) {
+            const fid = String(payload.fieldId);
             setAlertsMap(prev => {
               const copy = { ...prev };
-              const fid = payload.fieldId;
               if (!copy[fid]) copy[fid] = {};
               copy[fid][payload.type] = {
                 message: payload.message,
@@ -63,7 +64,7 @@ export function AlertsProvider({ children }) {
 
       es.onerror = (err) => {
         console.error("SSE error", err);
-        try { es.close(); } catch(_) {}
+        try { es.close(); } catch (_) {}
         setTimeout(() => {
           reconnectDelay = Math.min(60000, reconnectDelay * 2);
           connect();
@@ -78,7 +79,7 @@ export function AlertsProvider({ children }) {
   const clearFieldAlertsLocal = (fieldId) => {
     setAlertsMap(prev => {
       const copy = { ...prev };
-      delete copy[fieldId];
+      delete copy[String(fieldId)];
       return copy;
     });
   };

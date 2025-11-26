@@ -21,13 +21,11 @@ public class AlertsController {
     @Autowired
     private AlertService alertService;
 
-    // SSE subscription for clients
     @GetMapping(value = "/alerts/sse", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public SseEmitter streamAlerts() {
         return alertService.createEmitter();
     }
 
-    // Python (simulator) posts alerts here
     @PostMapping("/alerts")
     public Map<String, Object> receiveAlert(@RequestBody AlertDto alert) {
         boolean accepted = alertService.storeAndPublish(alert);
@@ -35,7 +33,6 @@ public class AlertsController {
         return Map.of("status", "ok");
     }
 
-    // When user clicks "Apply Fix" the frontend calls adjust (existing endpoint) which should call Python and then, after fix, you can call this endpoint
     @PostMapping("/alerts/clear")
     public Map<String, Object> clearAlerts(@RequestBody Map<String, Object> body) {
         Integer fieldId = (Integer) body.get("fieldId");

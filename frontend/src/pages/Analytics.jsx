@@ -18,10 +18,12 @@ const Analytics = () => {
           setFields(res.data.fields);
         }
       });
-    }, 3000);
+    }, 60000); // 60 sec
+
 
     return () => clearInterval(interval);
   }, []);
+  console.log("Rendering LiveAlerts for field:", fields)            
   return (
     <div className="dashboard-grid">
       
@@ -44,8 +46,15 @@ const Analytics = () => {
         <div className="card-header">
           <h3>Real-time Alerts</h3>
         </div>
-        <FieldAlerts field={fields}/>
+          {
+            fields?.map(field => (
+              <LiveAlerts key={field.field_id} fieldId={field.field_id} />
+            ))
+          }
+          {/* <LiveAlerts fieldId={fields.field_id} /> */}
+        
       </div>
+
 
       {/* Bottom Row: AI Insights */}
       <div className="dashboard-card ai-card full-width">

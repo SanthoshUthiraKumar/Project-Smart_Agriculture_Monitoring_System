@@ -1,10 +1,8 @@
 import requests, time, os
+
 JAVA_ALERT_URL = os.environ.get("JAVA_ALERT_URL", "http://localhost:8080/api/v1/analytics/alerts")
-
-# simple debounce map (in-memory)
 _last_sent = {}
-
-COOLDOWN = 60  # seconds minimal per field+type (python-side safeguard)
+COOLDOWN = 60  # seconds per field+type on python side
 
 def send_alert(field_id:int, alert_type:str, level:str, message:str):
     key = f"{field_id}_{alert_type}"
