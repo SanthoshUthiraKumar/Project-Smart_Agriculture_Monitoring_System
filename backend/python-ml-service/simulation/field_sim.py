@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import asyncio
 from .plant_model import Plant, Field
+from utils.alert_publisher import send_alert
 
 DATASET_PATH = "models/enhanced_agri_dataset.csv"
 
@@ -91,6 +92,18 @@ class FieldSimulation:
 
                 for f in self.fields:
                     f.compute_aggregates()
+                    # after matched.compute_aggregates() in your simulation update loop
+                    # simple threshold checks
+                    if f.avg_ndvi < 0.3:
+                        send_alert(f.field_id, "LowNDVI", "warning", f"Field {f.field_id} average NDVI is low: {f.avg_ndvi:.3f}")
+                    if f.disease_risk > 0.4:
+                        send_alert(f.field_id, "HighDisease", "critical", f"High disease risk {f.disease_risk:.2f} in Field {f.field_id}")
+                    # irrigation / moisture check by averaging agro
+                    avg_irrigation = float(sum(p.agro.get("Irrigation",0) for p in f.plants)/len(f.plants))
+                    if avg_irrigation < 20:
+                        send_alert(f.field_id, "LowIrrigation", "warning", f"Low irrigation avg {avg_irrigation:.1f}")
+                    # you can add de-bounce (only send if previous alert older than X secs) to avoid spam
+
 
             await asyncio.sleep(self.update_interval)
 

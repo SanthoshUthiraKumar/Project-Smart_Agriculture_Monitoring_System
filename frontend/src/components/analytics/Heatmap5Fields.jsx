@@ -23,7 +23,7 @@ export default function Heatmap5Fields({ fields }) {
               </div>
 
               <div className="header-actions">
-                <NotificationBell count={count} onClick={() => {/* open small popup if you want */}} />
+                <NotificationBell fieldId={field.field_id} onClick={() => {/* open small popup if you want */}} />
                 <button className="btn-view" onClick={() => navigate(`/field/${field.field_id}`)}>Open</button>
               </div>
             </div>

@@ -1,0 +1,95 @@
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { ALERTS_SSE_URL } from "../api/analyticsAPI";
+
+const AlertsContext = createContext();
+
+export function AlertsProvider({ children }) {
+  const [alertsMap, setAlertsMap] = useState({}); // fieldId -> { type -> {message,level,timestamp} }
+
+  useEffect(() => {
+    let es;
+    let reconnectDelay = 1000;
+
+    const connect = () => {
+      es = new EventSource(ALERTS_SSE_URL);
+
+      es.onopen = () => {
+        console.log("SSE open");
+        reconnectDelay = 1000;
+      };
+
+      es.addEventListener("initial", (e) => {
+        // server will send initial snapshot as JSON
+        try {
+          const data = JSON.parse(e.data);
+          setAlertsMap(data || {});
+        } catch (err) {
+          console.warn("invalid initial snapshot", err);
+        }
+      });
+
+      es.addEventListener("alert", (e) => {
+        try {
+          const payload = JSON.parse(e.data);
+
+          // If it's a clear action published by server: {fieldId, action:"cleared"}
+          if (payload && payload.action === "cleared") {
+            setAlertsMap(prev => {
+              const copy = { ...prev };
+              delete copy[payload.fieldId];
+              return copy;
+            });
+            return;
+          }
+
+          // if payload is an AlertDto (fieldId, type, level, message, timestamp)
+          if (payload && payload.fieldId && payload.type) {
+            setAlertsMap(prev => {
+              const copy = { ...prev };
+              const fid = payload.fieldId;
+              if (!copy[fid]) copy[fid] = {};
+              copy[fid][payload.type] = {
+                message: payload.message,
+                level: payload.level,
+                timestamp: payload.timestamp
+              };
+              return copy;
+            });
+          }
+        } catch (err) {
+          console.warn("bad alert event", err);
+        }
+      });
+
+      es.onerror = (err) => {
+        console.error("SSE error", err);
+        try { es.close(); } catch(_) {}
+        setTimeout(() => {
+          reconnectDelay = Math.min(60000, reconnectDelay * 2);
+          connect();
+        }, reconnectDelay);
+      };
+    };
+
+    connect();
+    return () => { try { es.close(); } catch(_) {} };
+  }, []);
+
+  const clearFieldAlertsLocal = (fieldId) => {
+    setAlertsMap(prev => {
+      const copy = { ...prev };
+      delete copy[fieldId];
+      return copy;
+    });
+  };
+
+  return (
+    <AlertsContext.Provider value={{ alertsMap, clearFieldAlertsLocal }}>
+      {children}
+    </AlertsContext.Provider>
+  );
+}
+
+export function useAlerts() {
+  return useContext(AlertsContext);
+}

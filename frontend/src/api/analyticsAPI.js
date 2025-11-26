@@ -6,33 +6,14 @@ export const startSimulation = () =>
 export const fetchFieldSimulation = () =>
   http.get("/analytics/fields");
 
+export const ALERTS_SSE_URL = "http://localhost:8080/api/v1/analytics/alerts/sse";
 
-// Fetch all fields (with 100 plant pixels each)
-export const getAllFields = async () => {
-  const res = await http.get("/analytics/fields");
-  return res.data;
-};
+// fields
+export const getAllFields = () => http.get("/analytics/fields").then(r => r.data);
+export const getFieldById = (id) => http.get(`/analytics/fields/${id}`).then(r => r.data);
 
-// Fetch a single field by ID (for FieldView page)
-export const getFieldById = async (fieldId) => {
-  const res = await http.get(`/analytics/fields/${fieldId}`);
-  return res.data;
-};
+// adjust (calls Java aggregator which forwards to python)
+export const adjustField = (fieldId) => http.post("/analytics/adjust", { fieldId }).then(r => r.data);
 
-// Adjust field issues (irrigation, moisture, nitrogen, etc.)
-export const adjustField = async (fieldId) => {
-  const res = await http.post("/analytics/adjust", { fieldId });
-  return res.data;
-};
-
-// Health stats route (optional, for dashboard)
-export const getHealthStats = async () => {
-  const res = await http.get("/analytics/health");
-  return res.data;
-};
-
-// Disease stats route (optional)
-export const getDiseaseStats = async () => {
-  const res = await http.get("/analytics/disease");
-  return res.data;
-};
+// clear alerts for a field (post-fix)
+export const clearAlerts = (fieldId) => http.post("/alerts/clear", { fieldId }).then(r => r.data);

@@ -13,19 +13,23 @@ import { adjustField } from "../../api/analyticsAPI";
  *   - onAdjust(fieldId) - function to call when user clicks "Fix" in alerts
  *   - onClose() - optional close handler for modal or page
  */
+
+import { useAlerts } from "../../context/AlertsContext";
+
 export default function PixelFieldView({ field, onAdjust, onClose }) {
   const [selectedPlant, setSelectedPlant] = useState(null);
   const [alertsOpen, setAlertsOpen] = useState(false);
-
+  const { alerts } = useAlerts();
+  
   // compute alert count quickly
-  const alertCount = useMemo(() => {
+  let alertCount = useMemo(() => {
     if (!field) return 0;
     let count = 0;
     if (field.avg_ndvi < 0.3) count++;
     if (field.disease_risk > 0.4) count++;
     if (field.avg_health < 0.5) count++;
     if (field.avg_yield < 10) count++;
-
+    
     // compute plant-level agro averages if available
     if (field.plants && field.plants.length) {
       const avgIrr = field.plants.reduce((s,p) => s + ((p.agro && p.agro.Irrigation) || 0), 0) / field.plants.length;
@@ -37,6 +41,8 @@ export default function PixelFieldView({ field, onAdjust, onClose }) {
     }
     return count;
   }, [field]);
+  
+  alertCount = 0;
 
   if (!field) return <div className="pixel-empty">No field selected</div>;
 
@@ -68,9 +74,6 @@ export default function PixelFieldView({ field, onAdjust, onClose }) {
     );
   };
 
-  // dataset url for reference/download (local path; infra will transform)
-  const DATASET_URL = "/mnt/data/enhanced_agri_dataset.csv";
-
   return (
     <div className="pixel-field-wrap">
       <div className="pixel-field-header">
@@ -84,8 +87,7 @@ export default function PixelFieldView({ field, onAdjust, onClose }) {
         </div>
 
         <div className="right">
-          <a className="dataset-link" href={DATASET_URL} target="_blank" rel="noreferrer">Dataset</a>
-          <NotificationBell count={alertCount} onClick={() => setAlertsOpen(!alertsOpen)} />
+          <NotificationBell onClick={() => setAlertsOpen(!alertsOpen)} />
           <button className="btn-close" onClick={onClose}>Close</button>
         </div>
       </div>
