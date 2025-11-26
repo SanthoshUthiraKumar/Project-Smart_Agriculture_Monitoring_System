@@ -12,21 +12,48 @@ export default function LiveAlerts({ fieldId }) {
       await clearAlerts(fieldId);
       clearFieldAlertsLocal(fieldId);
     } catch (err) {
-      console.error("fix failed", err);
+      console.error("Fix failed", err);
     }
   };
 
-  if (fieldAlerts.length === 0) return <div className="alert-item">No alerts for this field</div>;
+  if (fieldAlerts.length === 0) {
+    return null; // Don't show anything if no alerts
+  }
 
   return (
-    <div className="alert-list">
-      {fieldAlerts.map(([type, data]) => (
-        <div key={type} className={`alert-item ${data.level}`}>
-          <strong>{type}</strong>: {data.message}
-        </div>
-      ))}
-      <button className="btn-fix" onClick={handleFix} style={{ marginTop: "10px" }}>
-        Apply Fix
+    <div className="alert-panel">
+      <div style={{ 
+        fontWeight: 600, 
+        fontSize: '0.85rem', 
+        color: 'var(--text-secondary)',
+        marginBottom: '12px',
+        textTransform: 'uppercase',
+        letterSpacing: '0.5px',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '8px'
+      }}>
+        <span style={{ fontSize: '1.2rem' }}>🔔</span>
+        Field {fieldId} Alerts
+      </div>
+      
+      <div className="alert-list">
+        {fieldAlerts.map(([type, data]) => {
+          const emoji = data.level === 'critical' ? '🚨' : data.level === 'warning' ? '⚠️' : 'ℹ️';
+          
+          return (
+            <div key={type} className={`alert-item ${data.level}`}>
+              <span style={{ fontSize: '1.2rem', flexShrink: 0 }}>{emoji}</span>
+              <div style={{ flex: 1 }}>
+                <strong>{type}</strong>: {data.message}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+      
+      <button className="btn-fix" onClick={handleFix}>
+        ✨ Apply Automated Fix
       </button>
     </div>
   );
