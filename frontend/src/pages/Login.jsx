@@ -19,7 +19,7 @@ const Login = () => {
     if (error) setError('');
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
@@ -30,170 +30,135 @@ const Login = () => {
       return;
     }
 
-    // Simulate API call
+    // Fake API
     setTimeout(() => {
-      if (credentials.email && credentials.password) {
-        navigate('/analytics');
-      } else {
-        setError('Invalid credentials. Please try again.');
-        setLoading(false);
-      }
+      navigate('/analytics');
     }, 800);
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-hr-dark to-[#1c2128] p-5 relative overflow-hidden">
-      {/* Animated Grid Background */}
-      <div className="absolute inset-0 opacity-30">
-        <div 
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `
-              repeating-linear-gradient(0deg, transparent, transparent 50px, rgba(57, 211, 83, 0.03) 50px, rgba(57, 211, 83, 0.03) 51px),
-              repeating-linear-gradient(90deg, transparent, transparent 50px, rgba(57, 211, 83, 0.03) 50px, rgba(57, 211, 83, 0.03) 51px)
-            `
-          }}
-        ></div>
-      </div>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 via-white to-gray-50 p-4">
+      <div className="bg-white border border-gray-200 rounded-3xl p-12 w-full max-w-md shadow-2xl">
 
-      {/* Login Container */}
-      <div className="bg-hr-card border border-hr-border rounded-xl p-12 w-full max-w-md shadow-2xl relative z-10 animate-slide-up">
-        {/* Logo */}
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-hr-green flex items-center justify-center gap-3 mb-2">
-            <span>🌾</span>
-            <span>AgroTech</span>
+        {/* Header */}
+        <div className="text-center mb-10">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl mb-4 shadow-lg">
+            <span className="text-white font-bold text-2xl">S</span>
+          </div>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            Welcome Back
           </h1>
-          <p className="text-hr-text-secondary text-sm">
-            Digital Farm Management Platform
+          <p className="text-gray-500">
+            Sign in to access your analytics dashboard
           </p>
         </div>
 
-        {/* Error Message */}
+        {/* Error */}
         {error && (
-          <div className="bg-hr-red/10 border border-hr-red rounded-md p-3 mb-4 flex items-center gap-2 text-hr-red text-sm">
-            <span className="text-base">⚠️</span>
+          <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-6 text-red-600 text-sm flex items-center gap-3">
+            <svg className="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+            </svg>
             <span>{error}</span>
           </div>
         )}
 
-        {/* Login Form */}
+        {/* Form */}
         <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-          {/* Email Field */}
+
+          {/* Email */}
           <div className="flex flex-col gap-2">
-            <label htmlFor="email" className="text-hr-text font-medium text-sm">
-              Email
+            <label className="text-sm font-semibold text-gray-700">
+              Email Address
             </label>
             <input
               type="email"
-              id="email"
               name="email"
-              placeholder="farmer@agrotech.com"
               value={credentials.email}
               onChange={handleChange}
-              required
-              autoComplete="email"
-              className="
-                bg-hr-dark border border-hr-border rounded-md px-4 py-3
-                text-hr-text text-sm transition-all duration-200
-                focus:outline-none focus:border-hr-green focus:ring-4 focus:ring-hr-green/10
-                placeholder:text-hr-text-secondary placeholder:opacity-60
-              "
+              placeholder="you@example.com"
+              className="border border-gray-300 rounded-xl px-4 py-3.5 text-base 
+                         focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent
+                         transition-all duration-200"
             />
           </div>
 
-          {/* Password Field */}
+          {/* Password */}
           <div className="flex flex-col gap-2">
-            <label htmlFor="password" className="text-hr-text font-medium text-sm">
+            <label className="text-sm font-semibold text-gray-700">
               Password
             </label>
             <input
               type="password"
-              id="password"
               name="password"
-              placeholder="••••••••"
               value={credentials.password}
               onChange={handleChange}
-              required
-              autoComplete="current-password"
-              className="
-                bg-hr-dark border border-hr-border rounded-md px-4 py-3
-                text-hr-text text-sm transition-all duration-200
-                focus:outline-none focus:border-hr-green focus:ring-4 focus:ring-hr-green/10
-                placeholder:text-hr-text-secondary
-              "
+              placeholder="Enter your password"
+              className="border border-gray-300 rounded-xl px-4 py-3.5 text-base 
+                         focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent
+                         transition-all duration-200"
             />
           </div>
 
-          {/* Remember Me Checkbox */}
-          <div className="flex items-center gap-2 mt-2">
-            <input
-              type="checkbox"
-              id="remember"
-              checked={rememberMe}
-              onChange={(e) => setRememberMe(e.target.checked)}
-              className="w-4 h-4 cursor-pointer accent-hr-green"
-            />
-            <label 
-              htmlFor="remember" 
-              className="text-hr-text-secondary text-sm cursor-pointer select-none"
-            >
-              Remember me
-            </label>
+          {/* Remember Me & Forgot Password */}
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                id="remember"
+                checked={rememberMe}
+                onChange={(e) => setRememberMe(e.target.checked)}
+                className="w-4 h-4 accent-green-600 rounded"
+              />
+              <label htmlFor="remember" className="text-sm text-gray-600 cursor-pointer">
+                Remember me
+              </label>
+            </div>
+            <a href="#forgot" className="text-sm font-medium text-green-600 hover:text-green-700 transition-colors">
+              Forgot password?
+            </a>
           </div>
 
-          {/* Submit Button */}
+          {/* Button */}
           <button
             type="submit"
             disabled={loading}
-            className="
-              bg-hr-green text-hr-darker font-semibold text-base py-3.5 rounded-md
-              transition-all duration-200 mt-3
-              hover:bg-hr-green-dark hover:shadow-lg hover:shadow-hr-green/30 hover:-translate-y-0.5
-              active:translate-y-0
-              disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0
-            "
+            className="bg-green-600 text-white py-4 rounded-full font-semibold text-base
+                       hover:bg-green-700 hover:scale-105 transition-all duration-300 
+                       disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl
+                       mt-2"
           >
-            {loading ? 'Signing in...' : 'Sign In'}
+            {loading ? (
+              <span className="flex items-center justify-center gap-2">
+                <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Signing in...
+              </span>
+            ) : (
+              'Sign In'
+            )}
           </button>
         </form>
 
-        {/* Additional Links */}
-        <div className="flex justify-between mt-4 text-sm">
-          <a 
-            href="#forgot" 
-            className="text-hr-blue hover:text-hr-green hover:underline transition-colors"
-          >
-            Forgot password?
-          </a>
-          <a 
-            href="#signup" 
-            className="text-hr-blue hover:text-hr-green hover:underline transition-colors"
-          >
-            Create account
-          </a>
-        </div>
-
         {/* Divider */}
-        <div className="flex items-center my-6">
-          <div className="flex-1 border-b border-hr-border"></div>
-          <span className="px-4 text-hr-text-secondary text-xs">OR</span>
-          <div className="flex-1 border-b border-hr-border"></div>
+        <div className="relative my-8">
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-full border-t border-gray-200"></div>
+          </div>
+          <div className="relative flex justify-center text-sm">
+            <span className="px-4 bg-white text-gray-500">New to SAMS?</span>
+          </div>
         </div>
 
-        {/* SSO Button */}
-        <button
-          type="button"
-          className="
-            w-full bg-transparent border border-hr-border text-hr-text
-            py-3 rounded-md font-medium text-sm flex items-center justify-center gap-2.5
-            transition-all duration-200
-            hover:bg-hr-hover hover:border-hr-green
-          "
+        {/* Create Account */}
+        <a 
+          href="#signup" 
+          className="block text-center py-3.5 border-2 border-gray-300 rounded-full font-semibold text-gray-700 hover:border-green-500 hover:text-green-600 transition-all duration-300"
         >
-          <span>🔑</span>
-          <span>Continue with SSO</span>
-        </button>
+          Create Account
+        </a>
       </div>
     </div>
   );

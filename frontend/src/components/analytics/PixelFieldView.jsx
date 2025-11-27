@@ -13,7 +13,7 @@ export default function PixelFieldView({ field, onAdjust, onClose }) {
 
   if (!field) {
     return (
-      <div className="text-hr-text-secondary text-center py-10">
+      <div className="text-gray-500 text-center py-20 text-sm">
         No field selected
       </div>
     );
@@ -31,64 +31,126 @@ export default function PixelFieldView({ field, onAdjust, onClose }) {
   };
 
   return (
-    <div className="bg-hr-card text-hr-text border border-hr-border rounded-xl p-7 shadow-xl">
-      {/* Field Header */}
-      <div className="flex justify-between items-start mb-6 pb-5 border-b-2 border-hr-border">
-        <div className="flex-1">
-          <h2 className="text-3xl font-bold text-hr-green mb-3 font-inter tracking-tight">
-            Field {field.field_id} — {field.crop_type}
-          </h2>
-          <div className="flex flex-wrap gap-6">
-            <span className="text-sm text-hr-text-secondary font-semibold px-4 py-2 bg-hr-dark rounded-lg flex items-center gap-2">
-              <span className="text-base">●</span>
-              Avg NDVI: <span className="text-hr-green">{field.avg_ndvi.toFixed(3)}</span>
-            </span>
-            <span className="text-sm text-hr-text-secondary font-semibold px-4 py-2 bg-hr-dark rounded-lg flex items-center gap-2">
-              <span className="text-base">●</span>
-              Avg Health: <span className="text-hr-green">{(field.avg_health*100).toFixed(1)}%</span>
-            </span>
-            <span className="text-sm text-hr-text-secondary font-semibold px-4 py-2 bg-hr-dark rounded-lg flex items-center gap-2">
-              <span className="text-base">●</span>
-              Avg Yield: <span className="text-hr-green">{field.avg_yield.toFixed(2)}</span>
-            </span>
+    <div className="bg-white rounded-2xl overflow-hidden border border-gray-200/60 shadow-sm">
+      {/* Field Header - Apple Style */}
+      <div className="bg-gradient-to-b from-gray-50 to-white border-b border-gray-200/60 px-8 py-6">
+        <div className="flex justify-between items-start">
+          <div className="flex-1">
+            <div className="flex items-center gap-3 mb-3">
+              <h2 className="text-2xl font-semibold text-gray-900 tracking-tight">
+                Field {field.field_id}
+              </h2>
+              <span className="text-sm font-medium text-gray-500 px-3 py-1 bg-white rounded-full border border-gray-200">
+                {field.crop_type}
+              </span>
+            </div>
+            
+            {/* Stats Row - Clean Apple Style */}
+            <div className="flex gap-6 mt-4">
+              <div className="flex flex-col">
+                <span className="text-xs font-medium text-gray-500 mb-1">Average NDVI</span>
+                <span className="text-lg font-semibold text-green-600">{field.avg_ndvi.toFixed(3)}</span>
+              </div>
+              <div className="w-px bg-gray-200"></div>
+              <div className="flex flex-col">
+                <span className="text-xs font-medium text-gray-500 mb-1">Health Score</span>
+                <span className="text-lg font-semibold text-green-600">{(field.avg_health*100).toFixed(1)}%</span>
+              </div>
+              <div className="w-px bg-gray-200"></div>
+              <div className="flex flex-col">
+                <span className="text-xs font-medium text-gray-500 mb-1">Avg Yield</span>
+                <span className="text-lg font-semibold text-green-600">{field.avg_yield.toFixed(2)}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Actions */}
+          <div className="flex items-center gap-3 flex-shrink-0">
+            <NotificationBell 
+              fieldId={field.field_id} 
+              onClick={() => setAlertsOpen(!alertsOpen)} 
+            />
+            <button 
+              onClick={onClose}
+              className="text-sm font-medium text-gray-600 hover:text-gray-900 px-4 py-2 rounded-lg hover:bg-gray-100 transition-all"
+            >
+              Close
+            </button>
           </div>
         </div>
-        <div className="flex items-center gap-3 flex-shrink-0">
-          <NotificationBell 
-            fieldId={field.field_id} 
-            onClick={() => setAlertsOpen(!alertsOpen)} 
-          />
-          <button 
-            onClick={onClose}
-            className="bg-transparent border border-hr-border text-hr-text-secondary px-5 py-2 rounded-lg font-semibold transition-all duration-200 hover:bg-hr-hover hover:border-hr-green hover:text-hr-green"
-          >
-            Close
-          </button>
-        </div>
       </div>
 
-      {/* Pixel Grid - 10x10 */}
-      <div className="grid grid-cols-10 gap-1 bg-hr-dark p-4 rounded-lg shadow-inner max-w-[600px] mx-auto mb-6 border border-hr-border">
-        {field.plants.map((p, i) => {
-          const ndvi = p.ndvi ?? 0;
-          const color = rainbowColor(ndvi, -1, 1);
-          return (
-            <div
-              key={i}
-              className="aspect-square rounded cursor-pointer transition-all duration-150 hover:scale-125 hover:z-10 hover:shadow-lg border border-black/20"
-              style={{ backgroundColor: color }}
-              onClick={() => onPixelClick(p)}
-            />
-          );
-        })}
-      </div>
-
-      {/* Alerts Container */}
-      {alertsOpen && (
-        <div className="mt-6 p-5 bg-hr-green/5 border border-hr-green/20 rounded-lg">
-          <FieldAlerts field={field} />
+      {/* Content Area */}
+      <div className="px-8 py-8">
+        {/* Pixel Grid - Apple Minimalist Style */}
+        <div className="mb-8">
+          <h3 className="text-sm font-semibold text-gray-900 mb-4 tracking-tight">Field Visualization</h3>
+          <div className="inline-block bg-gray-50 rounded-xl p-6 border border-gray-200/60">
+            <div className="grid grid-cols-10 gap-1.5 w-[500px] h-[500px]">
+              {field.plants.map((p, i) => {
+                const ndvi = p.ndvi ?? 0;
+                const color = rainbowColor(ndvi, -1, 1);
+                return (
+                  <div
+                    key={i}
+                    className="w-full h-full rounded-md cursor-pointer transition-all duration-200 hover:scale-110 hover:z-10 hover:shadow-lg hover:ring-2 hover:ring-gray-300"
+                    style={{ backgroundColor: color }}
+                    onClick={() => onPixelClick(p)}
+                  />
+                );
+              })}
+            </div>
+          </div>
+          
+          {/* Legend - Apple Style */}
+          <div className="mt-4 flex items-center gap-4 text-xs text-gray-500">
+            <span className="font-medium">Health Indicator:</span>
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded-full bg-red-500"></div>
+              <span>Low</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+              <span>Medium</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded-full bg-green-500"></div>
+              <span>High</span>
+            </div>
+          </div>
         </div>
-      )}
+
+        {/* Alerts Section - Clean Apple Card */}
+        {alertsOpen && alertCount > 0 && (
+          <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-6 border border-green-200/60">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-sm font-semibold text-gray-900">Active Alerts</h3>
+              <span className="text-xs font-medium text-green-600 px-2.5 py-1 bg-white rounded-full border border-green-200">
+                {alertCount} Alert{alertCount !== 1 ? 's' : ''}
+              </span>
+            </div>
+            <FieldAlerts field={field} />
+            <button
+              onClick={handleFix}
+              className="mt-4 w-full bg-green-600 hover:bg-green-700 text-white text-sm font-medium py-2.5 px-4 rounded-lg transition-all"
+            >
+              Apply Recommendations
+            </button>
+          </div>
+        )}
+
+        {alertsOpen && alertCount === 0 && (
+          <div className="bg-gray-50 rounded-xl p-8 text-center border border-gray-200/60">
+            <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
+              <svg className="w-6 h-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <p className="text-sm font-medium text-gray-900 mb-1">All Clear</p>
+            <p className="text-xs text-gray-500">No alerts for this field</p>
+          </div>
+        )}
+      </div>
 
       {/* Plant Detail Popup */}
       {selectedPlant && (

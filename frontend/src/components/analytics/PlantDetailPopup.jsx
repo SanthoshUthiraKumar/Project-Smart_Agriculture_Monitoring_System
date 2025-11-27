@@ -7,85 +7,115 @@ export default function PlantDetailPopup({ plant, onClose }) {
   
   return (
     <div 
-      className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[9999] animate-fade-in"
+      className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center z-[9999]"
       onClick={onClose}
     >
       <div 
-        className="bg-hr-card text-hr-text border border-hr-border p-7 rounded-xl w-[90%] max-w-[520px] shadow-2xl animate-slide-up max-h-[90vh] overflow-y-auto"
+        className="bg-white text-gray-900 rounded-3xl w-[90%] max-w-[900px] shadow-2xl max-h-[90vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Header */}
-        <div className="flex justify-between items-center mb-6 pb-4 border-b-2 border-hr-border">
-          <h3 className="text-2xl font-bold text-hr-green font-inter">
-            Plant {plant.plant_id} Details
-          </h3>
+        {/* Hero Header */}
+        <div className="relative px-12 pt-16 pb-12 text-center">
           <button 
             onClick={onClose}
-            className="bg-transparent border-none text-hr-text-secondary cursor-pointer text-2xl w-8 h-8 flex items-center justify-center rounded-full transition-all duration-200 hover:bg-hr-green/10 hover:text-hr-green hover:rotate-90"
+            className="absolute top-6 right-6 w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 hover:text-gray-900 transition-all"
           >
-            ×
+            <span className="text-xl">×</span>
           </button>
+          
+          <div className="inline-block px-4 py-1.5 bg-green-100 text-green-700 text-xs font-semibold uppercase tracking-wider rounded-full mb-4">
+            Plant Analysis
+          </div>
+          
+          <h1 className="text-5xl font-bold text-gray-900 mb-2">
+            Plant {plant.plant_id}
+          </h1>
+          
+          <p className="text-xl text-gray-500 font-light">
+            Comprehensive health and performance metrics
+          </p>
         </div>
 
-        {/* Main Stats Grid */}
-        <div className="grid grid-cols-2 gap-4 mb-6 p-4 bg-hr-dark rounded-lg">
-          <div className="flex justify-between py-2 text-sm">
-            <strong className="text-hr-text-secondary font-semibold">NDVI</strong>
-            <span className="text-hr-green font-code">{(plant.ndvi ?? 0).toFixed(3)}</span>
-          </div>
-          <div className="flex justify-between py-2 text-sm">
-            <strong className="text-hr-text-secondary font-semibold">Yield</strong>
-            <span className="text-hr-green font-code">{((plant.yield ?? 0)).toFixed(2)}</span>
-          </div>
-          <div className="flex justify-between py-2 text-sm">
-            <strong className="text-hr-text-secondary font-semibold">Health</strong>
-            <span className="text-hr-green font-code">{((plant.health ?? 0)*100).toFixed(1)}%</span>
-          </div>
-          <div className="flex justify-between py-2 text-sm">
-            <strong className="text-hr-text-secondary font-semibold">Disease Prob</strong>
-            <span className="text-hr-green font-code">{((plant.disease_prob ?? 0)).toFixed(3)}</span>
-          </div>
-        </div>
-
-        {/* Agronomy Section */}
-        <h4 className="text-lg font-semibold text-hr-green mb-3 pb-2 border-b border-hr-border">
-          Agronomy Data
-        </h4>
-        <div className="grid grid-cols-2 gap-3 p-4 bg-hr-dark rounded-lg">
-          <div className="px-3 py-2.5 bg-white dark:bg-hr-card rounded text-sm text-hr-text-secondary font-medium shadow-sm border border-hr-border">
-            Soil_N: <span className="text-hr-text font-semibold">{agro.Soil_N ?? "—"}</span>
-          </div>
-          <div className="px-3 py-2.5 bg-white dark:bg-hr-card rounded text-sm text-hr-text-secondary font-medium shadow-sm border border-hr-border">
-            Soil_P: <span className="text-hr-text font-semibold">{agro.Soil_P ?? "—"}</span>
-          </div>
-          <div className="px-3 py-2.5 bg-white dark:bg-hr-card rounded text-sm text-hr-text-secondary font-medium shadow-sm border border-hr-border">
-            Soil_K: <span className="text-hr-text font-semibold">{agro.Soil_K ?? "—"}</span>
-          </div>
-          <div className="px-3 py-2.5 bg-white dark:bg-hr-card rounded text-sm text-hr-text-secondary font-medium shadow-sm border border-hr-border">
-            pH: <span className="text-hr-text font-semibold">{agro.Soil_pH ?? "—"}</span>
-          </div>
-          <div className="px-3 py-2.5 bg-white dark:bg-hr-card rounded text-sm text-hr-text-secondary font-medium shadow-sm border border-hr-border">
-            Irrigation: <span className="text-hr-text font-semibold">{agro.Irrigation ?? "—"}</span>
-          </div>
-          <div className="px-3 py-2.5 bg-white dark:bg-hr-card rounded text-sm text-hr-text-secondary font-medium shadow-sm border border-hr-border">
-            Moisture: <span className="text-hr-text font-semibold">{agro.SoilMoisture ?? "—"}</span>
-          </div>
-          <div className="px-3 py-2.5 bg-white dark:bg-hr-card rounded text-sm text-hr-text-secondary font-medium shadow-sm border border-hr-border">
-            Temp: <span className="text-hr-text font-semibold">{agro.Temperature ?? "—"}</span>
-          </div>
-          <div className="px-3 py-2.5 bg-white dark:bg-hr-card rounded text-sm text-hr-text-secondary font-medium shadow-sm border border-hr-border">
-            Fertilizer: <span className="text-hr-text font-semibold">{agro.Fertilizer ?? "—"}</span>
+        {/* Featured Stats - Large Cards */}
+        <div className="px-12 pb-12">
+          <div className="grid grid-cols-4 gap-4">
+            <div className="text-center p-6 bg-gradient-to-br from-gray-50 to-white rounded-2xl border border-gray-100">
+              <div className="text-sm font-medium text-gray-500 mb-2">NDVI</div>
+              <div className="text-4xl font-semibold text-gray-900">{(plant.ndvi ?? 0).toFixed(3)}</div>
+            </div>
+            <div className="text-center p-6 bg-gradient-to-br from-gray-50 to-white rounded-2xl border border-gray-100">
+              <div className="text-sm font-medium text-gray-500 mb-2">Yield</div>
+              <div className="text-4xl font-semibold text-gray-900">{((plant.yield ?? 0)).toFixed(2)}</div>
+            </div>
+            <div className="text-center p-6 bg-gradient-to-br from-green-50 to-white rounded-2xl border border-green-100">
+              <div className="text-sm font-medium text-green-700 mb-2">Health</div>
+              <div className="text-4xl font-semibold text-green-600">{((plant.health ?? 0)*100).toFixed(1)}%</div>
+            </div>
+            <div className="text-center p-6 bg-gradient-to-br from-gray-50 to-white rounded-2xl border border-gray-100">
+              <div className="text-sm font-medium text-gray-500 mb-2">Disease Risk</div>
+              <div className="text-4xl font-semibold text-gray-900">{((plant.disease_prob ?? 0)).toFixed(3)}</div>
+            </div>
           </div>
         </div>
 
-        {/* Close Button */}
-        <div className="mt-6 text-right">
-          <button 
-            onClick={onClose}
-            className="bg-hr-green text-hr-darker font-semibold px-6 py-2.5 rounded-lg transition-all duration-200 hover:bg-hr-green-dark hover:shadow-lg hover:shadow-hr-green/30 hover:-translate-y-0.5"
-          >
-            Close
-          </button>
+        {/* Divider */}
+        <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent mx-12"></div>
+
+        {/* Agronomy Section - Apple Style List */}
+        <div className="px-12 py-12">
+          <h2 className="text-3xl font-bold text-gray-900 mb-2">
+            Agronomy Data
+          </h2>
+          <p className="text-lg text-gray-500 mb-8">
+            Detailed soil composition and environmental factors
+          </p>
+          
+          <div className="space-y-3">
+            <div className="flex justify-between items-center py-4 px-6 bg-white rounded-xl border border-gray-100 hover:border-green-500 hover:shadow-md transition-all">
+              <span className="text-base font-medium text-gray-900">Soil Nitrogen</span>
+              <span className="text-base font-semibold text-green-600">{agro.Soil_N ?? "—"}</span>
+            </div>
+            <div className="flex justify-between items-center py-4 px-6 bg-white rounded-xl border border-gray-100 hover:border-green-500 hover:shadow-md transition-all">
+              <span className="text-base font-medium text-gray-900">Soil Phosphorus</span>
+              <span className="text-base font-semibold text-green-600">{agro.Soil_P ?? "—"}</span>
+            </div>
+            <div className="flex justify-between items-center py-4 px-6 bg-white rounded-xl border border-gray-100 hover:border-green-500 hover:shadow-md transition-all">
+              <span className="text-base font-medium text-gray-900">Soil Potassium</span>
+              <span className="text-base font-semibold text-green-600">{agro.Soil_K ?? "—"}</span>
+            </div>
+            <div className="flex justify-between items-center py-4 px-6 bg-white rounded-xl border border-gray-100 hover:border-green-500 hover:shadow-md transition-all">
+              <span className="text-base font-medium text-gray-900">pH Level</span>
+              <span className="text-base font-semibold text-green-600">{agro.Soil_pH ?? "—"}</span>
+            </div>
+            <div className="flex justify-between items-center py-4 px-6 bg-white rounded-xl border border-gray-100 hover:border-green-500 hover:shadow-md transition-all">
+              <span className="text-base font-medium text-gray-900">Irrigation Level</span>
+              <span className="text-base font-semibold text-green-600">{agro.Irrigation ?? "—"}</span>
+            </div>
+            <div className="flex justify-between items-center py-4 px-6 bg-white rounded-xl border border-gray-100 hover:border-green-500 hover:shadow-md transition-all">
+              <span className="text-base font-medium text-gray-900">Soil Moisture</span>
+              <span className="text-base font-semibold text-green-600">{agro.SoilMoisture ?? "—"}</span>
+            </div>
+            <div className="flex justify-between items-center py-4 px-6 bg-white rounded-xl border border-gray-100 hover:border-green-500 hover:shadow-md transition-all">
+              <span className="text-base font-medium text-gray-900">Temperature</span>
+              <span className="text-base font-semibold text-green-600">{agro.Temperature ?? "—"}</span>
+            </div>
+            <div className="flex justify-between items-center py-4 px-6 bg-white rounded-xl border border-gray-100 hover:border-green-500 hover:shadow-md transition-all">
+              <span className="text-base font-medium text-gray-900">Fertilizer Type</span>
+              <span className="text-base font-semibold text-green-600">{agro.Fertilizer ?? "—"}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Footer with CTA */}
+        <div className="px-12 py-8 bg-gray-50 rounded-b-3xl">
+          <div className="flex justify-center">
+            <button 
+              onClick={onClose}
+              className="px-8 py-3.5 bg-green-600 text-white text-base font-semibold rounded-full hover:bg-green-700 transition-all hover:scale-105 shadow-lg"
+            >
+              Close
+            </button>
+          </div>
         </div>
       </div>
     </div>

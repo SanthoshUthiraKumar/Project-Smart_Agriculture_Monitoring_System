@@ -8,14 +8,14 @@ export default function NotificationBell({ fieldId, onClick }) {
   return (
     <div 
       onClick={onClick}
-      className="relative inline-flex items-center justify-center w-9 h-9 bg-gray-200 dark:bg-hr-dark/50 rounded-full cursor-pointer transition-all duration-200 hover:bg-gray-300 dark:hover:bg-hr-green/20 hover:scale-110 border border-gray-300 dark:border-hr-border group"
+      className="relative inline-flex items-center justify-center w-10 h-10 bg-gray-100 rounded-full cursor-pointer transition-all duration-300 hover:bg-gray-200 hover:scale-110 group"
     >
       <svg 
-        width="18" 
-        height="18" 
+        width="20" 
+        height="20" 
         viewBox="0 0 24 24" 
         fill="none" 
-        className="transition-colors duration-200 text-gray-600 dark:text-hr-text-secondary group-hover:text-hr-green"
+        className="transition-colors duration-300 text-gray-600 group-hover:text-green-600"
       >
         <path 
           d="M18 8C18 6.4087 17.3679 4.88258 16.2426 3.75736C15.1174 2.63214 13.5913 2 12 2C10.4087 2 8.88258 2.63214 7.75736 3.75736C6.63214 4.88258 6 6.4087 6 8C6 15 3 17 3 17H21C21 17 18 15 18 8Z" 
@@ -33,7 +33,7 @@ export default function NotificationBell({ fieldId, onClick }) {
         />
       </svg>
       {count > 0 && (
-        <span className="absolute -top-1 -right-1 bg-hr-red text-white text-xs font-bold px-1.5 py-0.5 rounded-full min-w-[18px] text-center shadow-lg animate-pulse">
+        <span className="absolute -top-1.5 -right-1.5 bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full min-w-[20px] text-center shadow-lg border-2 border-white animate-bounce">
           {count}
         </span>
       )}

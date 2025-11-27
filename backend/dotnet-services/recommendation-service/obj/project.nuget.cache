@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "UUxiTOh6B24=",
+  "dgSpecHash": "I1EqUf53VPs=",
   "success": true,
-  "projectFilePath": "C:\\Users\\SEC\\OneDrive\\Desktop\\Project\\Final Year Project\\Smart_Agriculture_Monitoring_System-1\\backend\\dotnet-services\\recommendation-service\\recommendation-service.csproj",
+  "projectFilePath": "C:\\Users\\SEC\\OneDrive\\Desktop\\Project\\Final Year Project\\Smart_Agriculture_Monitoring_System\\backend\\dotnet-services\\recommendation-service\\recommendation-service.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\SEC\\.nuget\\packages\\microsoft.aspnetcore.openapi\\8.0.22\\microsoft.aspnetcore.openapi.8.0.22.nupkg.sha512",
     "C:\\Users\\SEC\\.nuget\\packages\\microsoft.extensions.apidescription.server\\8.0.0\\microsoft.extensions.apidescription.server.8.0.0.nupkg.sha512",
