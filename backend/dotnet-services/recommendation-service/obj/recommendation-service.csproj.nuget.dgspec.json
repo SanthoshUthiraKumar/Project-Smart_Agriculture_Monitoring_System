@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\SEC\\OneDrive\\Desktop\\Project\\Final Year Project\\Smart_Agriculture_Monitoring_System\\backend\\dotnet-services\\recommendation-service\\recommendation-service.csproj": {}
+    "C:\\Users\\SEC\\OneDrive\\Desktop\\Project\\Final Year Project\\Smart_Agriculture_Monitoring_System-1\\backend\\dotnet-services\\recommendation-service\\recommendation-service.csproj": {}
   },
   "projects": {
-    "C:\\Users\\SEC\\OneDrive\\Desktop\\Project\\Final Year Project\\Smart_Agriculture_Monitoring_System\\backend\\dotnet-services\\recommendation-service\\recommendation-service.csproj": {
+    "C:\\Users\\SEC\\OneDrive\\Desktop\\Project\\Final Year Project\\Smart_Agriculture_Monitoring_System-1\\backend\\dotnet-services\\recommendation-service\\recommendation-service.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\SEC\\OneDrive\\Desktop\\Project\\Final Year Project\\Smart_Agriculture_Monitoring_System\\backend\\dotnet-services\\recommendation-service\\recommendation-service.csproj",
+        "projectUniqueName": "C:\\Users\\SEC\\OneDrive\\Desktop\\Project\\Final Year Project\\Smart_Agriculture_Monitoring_System-1\\backend\\dotnet-services\\recommendation-service\\recommendation-service.csproj",
         "projectName": "recommendation-service",
-        "projectPath": "C:\\Users\\SEC\\OneDrive\\Desktop\\Project\\Final Year Project\\Smart_Agriculture_Monitoring_System\\backend\\dotnet-services\\recommendation-service\\recommendation-service.csproj",
+        "projectPath": "C:\\Users\\SEC\\OneDrive\\Desktop\\Project\\Final Year Project\\Smart_Agriculture_Monitoring_System-1\\backend\\dotnet-services\\recommendation-service\\recommendation-service.csproj",
         "packagesPath": "C:\\Users\\SEC\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\SEC\\OneDrive\\Desktop\\Project\\Final Year Project\\Smart_Agriculture_Monitoring_System\\backend\\dotnet-services\\recommendation-service\\obj\\",
+        "outputPath": "C:\\Users\\SEC\\OneDrive\\Desktop\\Project\\Final Year Project\\Smart_Agriculture_Monitoring_System-1\\backend\\dotnet-services\\recommendation-service\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\SEC\\AppData\\Roaming\\NuGet\\NuGet.Config"

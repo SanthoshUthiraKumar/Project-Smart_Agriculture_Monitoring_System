@@ -487,11 +487,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\SEC\\OneDrive\\Desktop\\Project\\Final Year Project\\Smart_Agriculture_Monitoring_System\\backend\\dotnet-services\\advisory-service\\advisory-service.csproj",
+      "projectUniqueName": "C:\\Users\\SEC\\OneDrive\\Desktop\\Project\\Final Year Project\\Smart_Agriculture_Monitoring_System-1\\backend\\dotnet-services\\advisory-service\\advisory-service.csproj",
       "projectName": "advisory-service",
-      "projectPath": "C:\\Users\\SEC\\OneDrive\\Desktop\\Project\\Final Year Project\\Smart_Agriculture_Monitoring_System\\backend\\dotnet-services\\advisory-service\\advisory-service.csproj",
+      "projectPath": "C:\\Users\\SEC\\OneDrive\\Desktop\\Project\\Final Year Project\\Smart_Agriculture_Monitoring_System-1\\backend\\dotnet-services\\advisory-service\\advisory-service.csproj",
       "packagesPath": "C:\\Users\\SEC\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\SEC\\OneDrive\\Desktop\\Project\\Final Year Project\\Smart_Agriculture_Monitoring_System\\backend\\dotnet-services\\advisory-service\\obj\\",
+      "outputPath": "C:\\Users\\SEC\\OneDrive\\Desktop\\Project\\Final Year Project\\Smart_Agriculture_Monitoring_System-1\\backend\\dotnet-services\\advisory-service\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\SEC\\AppData\\Roaming\\NuGet\\NuGet.Config"
