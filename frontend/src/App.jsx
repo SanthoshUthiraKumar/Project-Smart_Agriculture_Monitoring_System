@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import Analytics from "./pages/Analytics";
 import FieldView from "./pages/FieldView";
 import Login from "./pages/Login";
@@ -8,6 +8,14 @@ import ProtectedRoute from './components/ProtectedRoute';
 // Header Component - Apple Structure with HackerRank Colors
 const Header = () => {
   const location = useLocation();
+  const navigate = useNavigate(); // <--- 2. Get navigate function
+
+  // --- 3. Add Logout Handler ---
+  const handleLogout = () => {
+    localStorage.removeItem("token"); // Remove the token
+    localStorage.removeItem("user");  // Remove user info
+    navigate("/login");               // Redirect to Login
+  };
 
   return (
     <header className="bg-white/80 backdrop-blur-xl border-b border-gray-200/50 sticky top-0 z-50">
@@ -47,10 +55,13 @@ const Header = () => {
             </a>
           </nav>
 
-          {/* Right Side */}
+          {/* Right Side - Updated with Logout */}
           <div className="flex items-center gap-4">
-            <button className="text-xs font-medium text-gray-600 hover:text-gray-900 transition-colors">
-              Support
+            <button 
+              onClick={handleLogout} // <--- 4. Attach Click Handler
+              className="text-xs font-medium text-red-600 hover:text-red-700 transition-colors"
+            >
+              Sign Out
             </button>
             <div className="flex items-center gap-2 px-3 py-1.5 hover:bg-gray-50 rounded-full cursor-pointer transition-all">
               <div className="w-6 h-6 bg-gray-200 text-gray-700 rounded-full flex items-center justify-center text-[10px] font-semibold">

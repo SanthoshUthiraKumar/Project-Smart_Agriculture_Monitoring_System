@@ -4,14 +4,24 @@ import { ALERTS_SSE_URL } from "../api/analyticsAPI";
 const AlertsContext = createContext();
 
 export function AlertsProvider({ children }) {
-  const [alertsMap, setAlertsMap] = useState({}); // fieldId (string) -> { type -> {message,level,timestamp} }
+  const [alertsMap, setAlertsMap] = useState({});
 
   useEffect(() => {
     let es;
     let reconnectDelay = 1000;
 
     const connect = () => {
-      es = new EventSource(ALERTS_SSE_URL);
+      // 1. Retrieve the token
+      const token = localStorage.getItem("token");
+      
+      // If no token, we can't connect yet (or handle as needed)
+      if (!token) {
+        console.warn("No token found, skipping SSE connection");
+        return;
+      }
+
+      // 2. Append token to the URL query string
+      es = new EventSource(`${ALERTS_SSE_URL}?token=${token}`);
 
       es.onopen = () => {
         console.log("SSE open");

@@ -19,9 +19,8 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = repository.findByUsername(username)
-         .orElse(repository.findByEmail(username)
-         .orElseThrow(() -> new UsernameNotFoundException("User not found")));
+        User user = repository.findByUsername(username) 
+        .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
 
         
         // We pass an empty list for authorities since we aren't using Roles

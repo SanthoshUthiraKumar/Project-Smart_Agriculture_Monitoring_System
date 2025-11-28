@@ -44,13 +44,21 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String token = null;
         String username = null;
 
+        // 1. Check Header
         if (header != null && header.startsWith("Bearer ")) {
             token = header.substring(7);
+        } 
+        // 2. Check Query Parameter (Fix for SSE)
+        else if (request.getParameter("token") != null) {
+            token = request.getParameter("token");
+        }
+
+        if (token != null) {
             try {
                 username = jwtUtil.extractUsername(token);
             } catch (Exception ex) {
-                filterChain.doFilter(request, response);
-                return;
+                // Token invalid or expired
+                // Optionally log this error
             }
         }
 
