@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Analytics from "./pages/Analytics";
 import FieldView from "./pages/FieldView";
 import Login from "./pages/Login";
+import ProtectedRoute from './components/ProtectedRoute';
 
 // Header Component - Apple Structure with HackerRank Colors
 const Header = () => {
@@ -94,7 +95,7 @@ const AppLayout = ({ children }) => {
       <footer className="border-t border-gray-200/50 bg-gray-50">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-8 py-6">
           <div className="flex justify-between items-center text-xs text-gray-500">
-            <p>© 2024 FarmTech. All rights reserved.</p>
+            <p>© 2025 FarmTech. All rights reserved.</p>
             <div className="flex gap-6">
               <a href="#" className="hover:text-gray-900 transition-colors">Privacy Policy</a>
               <a href="#" className="hover:text-gray-900 transition-colors">Terms of Use</a>
@@ -114,8 +115,25 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/analytics" element={<Analytics />} />
-          <Route path="/field/:id" element={<FieldView />} />
+
+          {/* Protected Routes */}
+          <Route 
+            path="/analytics" 
+            element={
+              <ProtectedRoute>
+                <Analytics />
+              </ProtectedRoute>
+            } 
+          />
+
+          <Route 
+            path="/field/:id" 
+            element={
+              <ProtectedRoute>
+                <FieldView />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </AppLayout>
     </BrowserRouter>
