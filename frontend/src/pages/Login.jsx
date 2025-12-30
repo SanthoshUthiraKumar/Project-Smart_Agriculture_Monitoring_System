@@ -37,8 +37,9 @@ const Login = () => {
         // Backend expects "username", but form has "email". We map them here.
         username: credentials.email, 
         password: credentials.password
+        
       });
-
+      
       // If successful:
       const { token } = response.data;
       
